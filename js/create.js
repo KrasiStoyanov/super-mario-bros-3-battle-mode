@@ -32,10 +32,21 @@
     addPlayerAnimations(this, 'player2');
 
     /**
-     * @description Create animation controls (input detector, time limit).
+     * @description Create still animations.
      */
-    this.cursors = this.input.keyboard.createCursorKeys();
-    this.jumpTime = 0;
+    this.anims.create({
+        key: 'player1_still',
+        frames: self.anims.generateFrameNumbers('player1', { start: firstPlayer.animations.still.frames.start, end: firstPlayer.animations.still.frames.end }),
+        frameRate: firstPlayer.animations.still.frameRate,
+        repeat: true
+    });
+
+    this.anims.create({
+        key: 'player2_still',
+        frames: self.anims.generateFrameNumbers('player2', { start: secondPlayer.animations.still.frames.start, end: secondPlayer.animations.still.frames.end }),
+        frameRate: secondPlayer.animations.still.frameRate,
+        repeat: true
+    });
 
 	/**
      * @description Add a second layer - the entrances and exits so as to enemies appear as if they are coming in and out of them.
@@ -46,13 +57,33 @@
     /**
      * @description Add collision boundaries to the players.
      */
-    this.physics.add.collider(this.player1, this.backgroundLayer);
-    this.physics.add.collider(this.player1, this.entrancesAndExits);
     this.player1.setCollideWorldBounds(true);
-
-    this.physics.add.collider(this.player2, this.backgroundLayer);
-    this.physics.add.collider(this.player2, this.entrancesAndExits);
     this.player2.setCollideWorldBounds(true);
+
+    this.physics.add.collider(this.player1, this.player2);
+    this.physics.add.collider(this.player2, this.player1);
+
+    /**
+     * @description Create collider boundaries.
+     */
+    this.cursors = this.input.keyboard.createCursorKeys();
+    this.player1.jumpTime = 0;
+    this.player2.jumpTime = 0;
+
+    /**
+     * @description Create animation controls.
+     */
+    this.player1.controls = {
+        up: this.cursors.up,
+        right: this.cursors.right,
+        left: this.cursors.left,
+    };
+
+    this.player2.controls = {
+        up: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
+        right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
+        left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+    };
 }
 
 /**
@@ -64,29 +95,23 @@
  */
 function addPlayerAnimations (game, playerString) {
 	self = game;
+    console.log(self, playerString)
     self.anims.create({
-        key: 'still',
-        frames: self.anims.generateFrameNumbers(playerString, { start: playerAnimations.still.frames.start, end: playerAnimations.still.frames.end }),
-        frameRate: playerAnimations.still.frameRate,
-        repeat: true
-    });
-
-    self.anims.create({
-        key: 'right',
+        key: `${playerString}_right`,
         frames: self.anims.generateFrameNumbers(playerString, { start: playerAnimations.right.frames.start, end: playerAnimations.right.frames.end }),
         frameRate: playerAnimations.right.frameRate,
         repeat: true
     });
 
     self.anims.create({
-        key: 'left',
+        key: `${playerString}_left`,
         frames: self.anims.generateFrameNumbers(playerString, { start: playerAnimations.left.frames.start, end: playerAnimations.left.frames.end }),
         frameRate: playerAnimations.left.frameRate,
         repeat: true
     });
 
     self.anims.create({
-        key: 'jump',
+        key: `${playerString}_jump`,
         frames: self.anims.generateFrameNumbers(playerString, { frames: playerAnimations.jump.frames }),
         frameRate: playerAnimations.jump.frameRate
     });
