@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Super Mario Bros 3 Battle Mode - Adventure Edition</title>
+    <script src="js\phaser.min.js"></script>
+    <script src="js\constants.js"></script>
+    <script src="js\create.js"></script>
+    <script src="js\preload.js"></script>
+    <script src="js\update.js"></script>
+</head>
+
+<body>
+    <script>
+    (function() {
+        let scene = new Phaser.Scene('Balloon Fight');
+
+        let config = {
+            type: Phaser.AUTO,
+            width: 960,
+            height: 640,
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: {
+                        y: 1400
+                    },
+                    debug: false
+                }
+            },
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
+        };
+
+        let balloonFight = new Phaser.Game(config);
+    }());
+    </script>
+</body>
+
+</html>
