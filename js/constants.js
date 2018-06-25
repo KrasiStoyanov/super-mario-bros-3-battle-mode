@@ -1,3 +1,6 @@
+/**
+ * @description Velocity constants.
+ */
 const playerVelocity = {
 	x: 250,
 	y: 500
@@ -17,6 +20,9 @@ const enemyVelocity = {
 	}
 };
 
+/**
+ * @description Boundaries of environment.
+ */
 const exitTubesPositionBoundaries = {
 	left: {
 		x: 4 * 16,
@@ -28,11 +34,34 @@ const exitTubesPositionBoundaries = {
 	}
 };
 
+/**
+ * @description Positions for spawning new enemies (skeletons).
+ */
 const positionInWhichNewEnemyMustSpawn = {
 	x: 0,
 	y: 21 * 16
 };
 
+const enemies = {
+	skeleton: {
+		left: {
+			initialPosition: {
+				x: 4 * 16,
+				y: 7 * 16
+			}
+		},
+		right: {
+			initialPosition: {
+				x: 55 * 16,
+				y: 7 * 16
+			}
+		}
+	}
+};
+
+/**
+ * @description Positions and animation constants for the players.
+ */
 const firstPlayer = {
 	initialPosition: {
 		x: 26 * 16,
@@ -65,6 +94,9 @@ const secondPlayer = {
 	}
 };
 
+/**
+ * @description Animation constants for the players.
+ */
 const playerAnimations = {
 	still: {
 		frames: {
@@ -94,22 +126,5 @@ const playerAnimations = {
 	lose: {
 		frames: [9],
 		frameRate: 4
-	}
-};
-
-const enemies = {
-	skeleton: {
-		left: {
-			initialPosition: {
-				x: 4 * 16,
-				y: 7 * 16
-			}
-		},
-		right: {
-			initialPosition: {
-				x: 55 * 16,
-				y: 7 * 16
-			}
-		}
 	}
 };

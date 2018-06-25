@@ -105,7 +105,7 @@
      * @description Spawn ghosts (after a while).
      */
     this.time.addEvent({
-        delay: 3000,
+        delay: 5000,
         callback: () => {
             this.spawnGhosts = (game) => {
                 spawnGhosts(game);
@@ -120,7 +120,7 @@
      * @description Spawn bats (after a while).
      */
     this.time.addEvent({
-        delay: 8000,
+        delay: 10000,
         callback: () => {
             this.spawnBats = (game) => {
                 spawnBats(game);

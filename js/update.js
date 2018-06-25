@@ -23,15 +23,20 @@ function update () {
     checkForUserinput(this, this.player1, 'player1');
     checkForUserinput(this, this.player2, 'player2');
 
+    /**
+     * @description Check for collision between the players and the skeletons.
+     */
     checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.skeletonLeft, 'Blue');
     checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.skeletonRight, 'Blue');
     checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.skeletonLeft, 'Orange');
     checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.skeletonRight, 'Orange');
 
+    /**
+     * @description Check if the skeletons are in the lower tubes. If so - destroy them and render new ones.
+     */
     if (this.skeletonLeft.x > exitTubesPositionBoundaries.right.x && this.skeletonLeft.y > exitTubesPositionBoundaries.right.y) {
         this.skeletonLeft.destroy();
         this.skeletonLeft.isDestroyed = true;
-
     }
 
     if (this.skeletonRight.x < exitTubesPositionBoundaries.left.x && this.skeletonRight.y > exitTubesPositionBoundaries.left.y) {
@@ -43,6 +48,9 @@ function update () {
         this.spawnSkeletons(this);
     }
 
+    /**
+     * @description Make the ghosts follow the players and check if they collide with them.
+     */
     if (this.ghost1 && this.ghost2) {
         this.physics.moveToObject(this.ghost1, this.player1, enemyVelocity.ghost.x, 800);
         this.physics.moveToObject(this.ghost2, this.player2, enemyVelocity.ghost.x, 800);
@@ -53,6 +61,9 @@ function update () {
         checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.ghost2, 'Orange');
     }
 
+    /**
+     * @description Make the bats follow the players and make them aware of the surrounding objects. Also check if they collide with the players.
+     */
     if (this.bat1 && this.bat2) {
         this.physics.moveToObject(this.bat1, this.player1, enemyVelocity.bat.x, 2000);
         this.physics.moveToObject(this.bat2, this.player2, enemyVelocity.bat.x, 2000);
@@ -124,7 +135,7 @@ function checkForCollisionBetweenPlayerAndEnemy (game, player, enemy, winingPlay
  * @name gameOver
  * @param { Object } game - The "this" instance.
  * @param { String } winingPlayerString - The color of the wining player.
- * @description Display game over message.
+ * @description Display game over message (once).
  */
 function gameOver (game, winingPlayerString) {
     self = game;
