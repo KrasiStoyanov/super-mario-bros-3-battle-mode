@@ -5,8 +5,15 @@
  */
  function create () {
     /**
+     * @description Make a game over counter so as to prevent multiple game over function calls.
+     */
+    this.gameOverCounter = 0;
+
+    /**
      * @description Add music to the game and some initial game environment settings.
      */
+    this.jumpSound = this.sound.add('jump');
+    this.gameOverSound = this.sound.add('gameOver');
     this.music = this.sound.add('music');
     this.music.play();
 

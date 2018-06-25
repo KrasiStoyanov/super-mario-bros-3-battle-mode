@@ -25,8 +25,8 @@ function update () {
 
     checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.skeletonLeft, 'Blue');
     checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.skeletonRight, 'Blue');
-    checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.skeletonLeft, 'Red');
-    checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.skeletonRight, 'Red');
+    checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.skeletonLeft, 'Orange');
+    checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.skeletonRight, 'Orange');
 
     if (this.skeletonLeft.x > exitTubesPositionBoundaries.right.x && this.skeletonLeft.y > exitTubesPositionBoundaries.right.y) {
         this.skeletonLeft.destroy();
@@ -49,8 +49,8 @@ function update () {
 
         checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.ghost1, 'Blue');
         checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.ghost2, 'Blue');
-        checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.ghost1, 'Red');
-        checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.ghost2, 'Red');
+        checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.ghost1, 'Orange');
+        checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.ghost2, 'Orange');
     }
 
     if (this.bat1 && this.bat2) {
@@ -59,8 +59,8 @@ function update () {
 
         checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.bat1, 'Blue');
         checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.bat2, 'Blue');
-        checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.bat1, 'Red');
-        checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.bat2, 'Red');
+        checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.bat1, 'Orange');
+        checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.bat2, 'Orange');
     }
 }
 
@@ -93,6 +93,7 @@ function checkForUserinput (game, player, playerString) {
         player.anims.play(`${playerString}_jump`, true);
         player.setVelocityY(-playerVelocity.y);
         player.jumpTime = self.time.now + playerVelocity.y;
+        self.jumpSound.play();
     }
 }
 
@@ -121,8 +122,14 @@ function checkForCollisionBetweenPlayerAndEnemy (game, player, enemy, winingPlay
  */
 function gameOver (game, winingPlayerString) {
     self = game;
-    self.scene.pause();
+    if (self.gameOverCounter === 0) {
+        self.scene.pause();
+        self.music.pause();
+        self.gameOverSound.play();
 
-    let winText = self.add.text(self.backgroundLayer.width / 2, (self.backgroundLayer.height / 2) - 100, `${winingPlayerString} player wins!`);
-    winText.setOrigin(0.5, 0.5);
+        let winText = self.add.text(self.backgroundLayer.width / 2, (self.backgroundLayer.height / 2) - 100, `${winingPlayerString} player wins!`);
+        winText.setOrigin(0.5, 0.5);
+    }
+
+    self.gameOverCounter += 1;
 }
