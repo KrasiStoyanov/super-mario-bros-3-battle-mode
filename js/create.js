@@ -90,15 +90,15 @@
      * @description Create animation controls.
      */
     this.player1.controls = {
-        up: this.cursors.up,
-        right: this.cursors.right,
-        left: this.cursors.left,
-    };
-
-    this.player2.controls = {
         up: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
         right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
         left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
+    };
+
+    this.player2.controls = {
+        up: this.cursors.up,
+        right: this.cursors.right,
+        left: this.cursors.left,
     };
 
     /**
