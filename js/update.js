@@ -57,6 +57,12 @@ function update () {
         this.physics.moveToObject(this.bat1, this.player1, enemyVelocity.bat.x, 2000);
         this.physics.moveToObject(this.bat2, this.player2, enemyVelocity.bat.x, 2000);
 
+        this.physics.add.collider(this.bat1, this.backgroundLayer);
+        this.physics.add.collider(this.bat1, this.entrancesAndExits);
+
+        this.physics.add.collider(this.bat2, this.backgroundLayer);
+        this.physics.add.collider(this.bat2, this.entrancesAndExits);
+
         checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.bat1, 'Blue');
         checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.bat2, 'Blue');
         checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.bat1, 'Orange');
