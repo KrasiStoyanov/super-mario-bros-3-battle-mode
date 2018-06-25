@@ -23,22 +23,44 @@ function update () {
     checkForUserinput(this, this.player1, 'player1');
     checkForUserinput(this, this.player2, 'player2');
 
-    checkForCollisionBetweenPlayerAndSkeleton(this, this.player1, this.skeletonLeft, 'Blue');
-    checkForCollisionBetweenPlayerAndSkeleton(this, this.player1, this.skeletonRight, 'Blue');
-    checkForCollisionBetweenPlayerAndSkeleton(this, this.player2, this.skeletonLeft, 'Red');
-    checkForCollisionBetweenPlayerAndSkeleton(this, this.player2, this.skeletonRight, 'Red');
+    checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.skeletonLeft, 'Blue');
+    checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.skeletonRight, 'Blue');
+    checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.skeletonLeft, 'Red');
+    checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.skeletonRight, 'Red');
 
     if (this.skeletonLeft.x > exitTubesPositionBoundaries.right.x && this.skeletonLeft.y > exitTubesPositionBoundaries.right.y) {
         this.skeletonLeft.destroy();
-
-        this.spawnSkeletons(this);
+        this.skeletonLeft.isDestroyed = true;
 
     }
 
     if (this.skeletonRight.x < exitTubesPositionBoundaries.left.x && this.skeletonRight.y > exitTubesPositionBoundaries.left.y) {
         this.skeletonRight.destroy();
+        this.skeletonRight.isDestroyed = true;
+    }
 
+    if (this.skeletonLeft.isDestroyed && this.skeletonRight.isDestroyed) {
         this.spawnSkeletons(this);
+    }
+
+    if (this.ghost1 && this.ghost2) {
+        this.physics.moveToObject(this.ghost1, this.player1, enemyVelocity.ghost.x, 800);
+        this.physics.moveToObject(this.ghost2, this.player2, enemyVelocity.ghost.x, 800);
+
+        checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.ghost1, 'Blue');
+        checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.ghost2, 'Blue');
+        checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.ghost1, 'Red');
+        checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.ghost2, 'Red');
+    }
+
+    if (this.bat1 && this.bat2) {
+        this.physics.moveToObject(this.bat1, this.player1, enemyVelocity.bat.x, 2000);
+        this.physics.moveToObject(this.bat2, this.player2, enemyVelocity.bat.x, 2000);
+
+        checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.bat1, 'Blue');
+        checkForCollisionBetweenPlayerAndEnemy(this, this.player1, this.bat2, 'Blue');
+        checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.bat1, 'Red');
+        checkForCollisionBetweenPlayerAndEnemy(this, this.player2, this.bat2, 'Red');
     }
 }
 
@@ -76,17 +98,17 @@ function checkForUserinput (game, player, playerString) {
 
 /**
  * @function
- * @name checkForCollisionBetweenPlayerAndSkeleton
+ * @name checkForCollisionBetweenPlayerAndEnemy
  * @param { Object } game - The "this" instance.
  * @param { Object } player - The player instance.
- * @param { Object } skeleton - The skeleton instance.
+ * @param { Object } enemy - The enemy instance.
  * @param { String } winingPlayerString - The color of the wining player.
- * @description Check for collision between a player and a skeleton.
+ * @description Check for collision between a player and an enemy.
  */
-function checkForCollisionBetweenPlayerAndSkeleton (game, player, skeleton, winingPlayerString) {
+function checkForCollisionBetweenPlayerAndEnemy (game, player, enemy, winingPlayerString) {
     self  = game;
-    self.physics.add.overlap(player, skeleton, () => {
-        gameOver(game, winingPlayerString);
+    self.physics.add.overlap(player, enemy, () => {
+        gameOver(game, winingPlayerString, player);
     }, null, self);
 }
 

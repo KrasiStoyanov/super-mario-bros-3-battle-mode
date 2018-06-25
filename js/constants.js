@@ -90,6 +90,10 @@ const playerAnimations = {
 	jump: {
 		frames: [8],
 		frameRate: 4
+	},
+	lose: {
+		frames: [9],
+		frameRate: 4
 	}
 };
 

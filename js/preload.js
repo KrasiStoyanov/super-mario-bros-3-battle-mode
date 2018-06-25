@@ -13,6 +13,7 @@ function preload () {
     this.load.spritesheet('player2', 'assets/sprites/player-2.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('skeleton', 'assets/sprites/skeleton.png', { frameWidth: 18, frameHeight: 32 });
     this.load.image('ghost', 'assets/sprites/ghost.png');
+    this.load.image('bat', 'assets/sprites/bat.png');
 
     /**
      * @description Load all sound effects.

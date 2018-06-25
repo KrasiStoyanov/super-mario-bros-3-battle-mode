@@ -49,20 +49,13 @@
     });
 
     /**
-     * @description Spawn enemies.
+     * @description Spawn skeletons.
      */
     this.spawnSkeletons = (game) => {
         spawnSkeletons(game);
     };
 
     this.spawnSkeletons(this);
-
-
-    this.spawnGhosts = (game) => {
-        spawnGhosts(game);
-    };
-
-    this.spawnGhosts(this);
 
     /**
      * @description Add a second layer - the entrances and exits so as to enemies appear as if they are coming in and out of them.
@@ -100,6 +93,36 @@
         right: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
         left: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
     };
+
+    /**
+     * @description Spawn ghosts (after a while).
+     */
+    this.time.addEvent({
+        delay: 3000,
+        callback: () => {
+            this.spawnGhosts = (game) => {
+                spawnGhosts(game);
+            };
+
+            this.spawnGhosts(this);
+        },
+        callbackScope: this
+    });
+
+    /**
+     * @description Spawn bats (after a while).
+     */
+    this.time.addEvent({
+        delay: 8000,
+        callback: () => {
+            this.spawnBats = (game) => {
+                spawnBats(game);
+            };
+
+            this.spawnBats(this);
+        },
+        callbackScope: this
+    });
 }
 
 /**
@@ -129,6 +152,12 @@ function addPlayerAnimations (game, playerString) {
         key: `${playerString}_jump`,
         frames: self.anims.generateFrameNumbers(playerString, { frames: playerAnimations.jump.frames }),
         frameRate: playerAnimations.jump.frameRate
+    });
+
+    self.anims.create({
+        key: `${playerString}_lose`,
+        frames: self.anims.generateFrameNumbers(playerString, { frames: playerAnimations.lose.frames }),
+        frameRate: playerAnimations.lose.frameRate
     });
 }
 
@@ -174,34 +203,52 @@ function spawnGhosts (game) {
     self = game;
 
     /**
-     * @description Create left ghost.
+     * @description Create first ghost.
      */
     let ghost1RandomX = Math.floor(Math.random() * self.backgroundLayer.width);
     let ghost1RandomY = Math.floor(Math.random() * self.backgroundLayer.height);
-    self.ghost1 = self.physics.add.image(ghost1RandomX, ghost1RandomY, 'ghost').setGravity(0);
-
-    // self.ghost1.setVelocityX(enemyVelocity.ghost.x);
-    // self.ghost1.setVelocityY(enemyVelocity.ghost.y);
+    self.ghost1 = self.physics.add.image(ghost1RandomX, ghost1RandomY, 'ghost');
 
     self.ghost1.setOrigin(0.5, 0.5);
-
     self.ghost1.setCollideWorldBounds(true);
-    self.ghost1.setGravityY(0);
-    console.log(self.ghost1);
 
     /**
-     * @description Create right ghost.
+     * @description Create second ghost.
      */
     let ghost2RandomX = Math.floor(Math.random() * self.backgroundLayer.width);
     let ghost2RandomY = Math.floor(Math.random() * self.backgroundLayer.height);
-    self.ghost2 = self.physics.add.image(ghost2RandomX, ghost2RandomY, 'ghost').setGravity(0);
-
-    // self.ghost2.setVelocityX(enemyVelocity.ghost.x);
-    // self.ghost2.setVelocityY(enemyVelocity.ghost.y);
+    self.ghost2 = self.physics.add.image(ghost2RandomX, ghost2RandomY, 'ghost');
 
     self.ghost2.setOrigin(0.5, 0.5);
-
     self.ghost2.setCollideWorldBounds(true);
-    self.ghost2.setGravityY(0);
-    console.log(self, self.ghost2);
+}
+
+/**
+ * @function
+ * @name spawnBats
+ * @param { Object } game - The "this" instance.
+ * @description Spawn the bat enemies.
+ */
+function spawnBats (game) {
+    self = game;
+
+    /**
+     * @description Create first bat.
+     */
+    let bat1RandomX = Math.floor(Math.random() * self.backgroundLayer.width);
+    let bat1RandomY = Math.floor(Math.random() * self.backgroundLayer.height);
+    self.bat1 = self.physics.add.image(bat1RandomX, bat1RandomY, 'bat');
+
+    self.bat1.setOrigin(0.5, 0.5);
+    self.bat1.setCollideWorldBounds(true);
+
+    /**
+     * @description Create second bat.
+     */
+    let bat2RandomX = Math.floor(Math.random() * self.backgroundLayer.width);
+    let bat2RandomY = Math.floor(Math.random() * self.backgroundLayer.height);
+    self.bat2 = self.physics.add.image(bat2RandomX, bat2RandomY, 'bat');
+
+    self.bat2.setOrigin(0.5, 0.5);
+    self.bat2.setCollideWorldBounds(true);
 }
