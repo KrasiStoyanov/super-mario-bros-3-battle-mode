@@ -1,7 +1,42 @@
+const playerVelocity = {
+	x: 250,
+	y: 500
+};
+
+const enemyVelocity = {
+	skeleton: {
+		x: 100
+	},
+	bat: {
+		x: 150,
+		y: 150
+	},
+	ghost: {
+		x: 200,
+		y: 200
+	}
+};
+
+const exitTubesPositionBoundaries = {
+	left: {
+		x: 4 * 16,
+		y: 32 * 16
+	},
+	right: {
+		x: 56 * 16,
+		y: 32 * 16
+	}
+};
+
+const positionInWhichNewEnemyMustSpawn = {
+	x: 0,
+	y: 21 * 16
+};
+
 const firstPlayer = {
 	initialPosition: {
-		x: 416,
-		y: 344
+		x: 26 * 16,
+		y: 21 * 16
 	},
 	animations: {
 		still: {
@@ -16,8 +51,8 @@ const firstPlayer = {
 
 const secondPlayer = {
 	initialPosition: {
-		x: 544,
-		y: 344
+		x: 34 * 16,
+		y: 21 * 16
 	},
 	animations: {
 		still: {
@@ -55,5 +90,22 @@ const playerAnimations = {
 	jump: {
 		frames: [8],
 		frameRate: 4
+	}
+};
+
+const enemies = {
+	skeleton: {
+		left: {
+			initialPosition: {
+				x: 4 * 16,
+				y: 7 * 16
+			}
+		},
+		right: {
+			initialPosition: {
+				x: 55 * 16,
+				y: 7 * 16
+			}
+		}
 	}
 };

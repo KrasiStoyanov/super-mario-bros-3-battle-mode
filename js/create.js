@@ -48,7 +48,23 @@
         repeat: true
     });
 
-	/**
+    /**
+     * @description Spawn enemies.
+     */
+    this.spawnSkeletons = (game) => {
+        spawnSkeletons(game);
+    };
+
+    this.spawnSkeletons(this);
+
+
+    this.spawnGhosts = (game) => {
+        spawnGhosts(game);
+    };
+
+    this.spawnGhosts(this);
+
+    /**
      * @description Add a second layer - the entrances and exits so as to enemies appear as if they are coming in and out of them.
      */
     this.entrancesAndExits = this.map.createStaticLayer('entrancesAndExits', tileSet, 0, 0);
@@ -94,8 +110,7 @@
  * @description Attach animation controlls for the selected player.
  */
 function addPlayerAnimations (game, playerString) {
-	self = game;
-    console.log(self, playerString)
+    self = game;
     self.anims.create({
         key: `${playerString}_right`,
         frames: self.anims.generateFrameNumbers(playerString, { start: playerAnimations.right.frames.start, end: playerAnimations.right.frames.end }),
@@ -115,4 +130,78 @@ function addPlayerAnimations (game, playerString) {
         frames: self.anims.generateFrameNumbers(playerString, { frames: playerAnimations.jump.frames }),
         frameRate: playerAnimations.jump.frameRate
     });
+}
+
+/**
+ * @function
+ * @name spawnSkeleton
+ * @param { Object } game - The "this" instance.
+ * @description Spawn the skeleton enemies.
+ */
+function spawnSkeletons (game) {
+    self = game;
+
+    /**
+     * @description Create left skeleton.
+     */
+    self.skeletonLeft = self.physics.add.sprite(enemies.skeleton.left.initialPosition.x, enemies.skeleton.left.initialPosition.y, 'skeleton');
+    self.skeletonLeft.setVelocityX(enemyVelocity.skeleton.x);
+
+    self.skeletonLeft.setOrigin(0.5, 0.5);
+
+    self.skeletonLeft.setCollideWorldBounds(true);
+    self.physics.add.collider(self.skeletonLeft, self.backgroundLayer);
+
+    /**
+     * @description Create right skeleton.
+     */
+    self.skeletonRight = self.physics.add.sprite(enemies.skeleton.right.initialPosition.x, enemies.skeleton.right.initialPosition.y, 'skeleton', 2);
+    self.skeletonRight.setVelocityX(-enemyVelocity.skeleton.x);
+
+    self.skeletonRight.setOrigin(0.5, 0.5);
+
+    self.skeletonRight.setCollideWorldBounds(true);
+    self.physics.add.collider(self.skeletonRight, self.backgroundLayer);
+}
+
+/**
+ * @function
+ * @name spawnGhosts
+ * @param { Object } game - The "this" instance.
+ * @description Spawn the ghost enemies.
+ */
+function spawnGhosts (game) {
+    self = game;
+
+    /**
+     * @description Create left ghost.
+     */
+    let ghost1RandomX = Math.floor(Math.random() * self.backgroundLayer.width);
+    let ghost1RandomY = Math.floor(Math.random() * self.backgroundLayer.height);
+    self.ghost1 = self.physics.add.image(ghost1RandomX, ghost1RandomY, 'ghost').setGravity(0);
+
+    // self.ghost1.setVelocityX(enemyVelocity.ghost.x);
+    // self.ghost1.setVelocityY(enemyVelocity.ghost.y);
+
+    self.ghost1.setOrigin(0.5, 0.5);
+
+    self.ghost1.setCollideWorldBounds(true);
+    self.ghost1.setGravityY(0);
+    console.log(self.ghost1);
+
+    /**
+     * @description Create right ghost.
+     */
+    let ghost2RandomX = Math.floor(Math.random() * self.backgroundLayer.width);
+    let ghost2RandomY = Math.floor(Math.random() * self.backgroundLayer.height);
+    self.ghost2 = self.physics.add.image(ghost2RandomX, ghost2RandomY, 'ghost').setGravity(0);
+
+    // self.ghost2.setVelocityX(enemyVelocity.ghost.x);
+    // self.ghost2.setVelocityY(enemyVelocity.ghost.y);
+
+    self.ghost2.setOrigin(0.5, 0.5);
+
+    self.ghost2.setCollideWorldBounds(true);
+    self.ghost2.setGravityY(0);
+    console.log(self, self.ghost2);
 }
